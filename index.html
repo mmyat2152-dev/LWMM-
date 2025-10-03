@@ -1,482 +1,172 @@
-.
-
-`html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English-Myanmar Speaking Practice</title>
+    <title>အင်္ဂလိပ်-မြန်မာ စကားပြော ၁၀၀</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
             color: #333;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
         }
-        
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-        
-        header {
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            color: white;
-            padding: 20px;
+        h1 {
+            color: #0056b3;
             text-align: center;
-        }
-        
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-        
-        .app-body {
-            padding: 30px;
-        }
-        
-        .language-selector {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 10px;
-        }
-        
-        .language-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            background-color: #e0e0e0;
-            color: #555;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .language-btn.active {
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            color: white;
-            box-shadow: 0 4px 10px rgba(30, 60, 114, 0.3);
-        }
-        
-        .phrase-container {
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .phrase {
-            font-size: 22px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        
-        .translation {
-            font-size: 18px;
-            color: #555;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
             margin-bottom: 30px;
         }
-        
-        .control-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(to right, #1e3c72, #2a5298);
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
             color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
-        
-        .control-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
-        
-        .control-btn:active {
-            transform: translateY(0);
+        tr:hover {
+            background-color: #f1f1f1;
         }
-        
-        .control-btn.secondary {
-            background: linear-gradient(to right, #757f9a, #d7dde8);
-        }
-        
-        .practice-area {
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);}
-        
-        .practice-area h3 {
+        .number {
+            width: 5%;
             text-align: center;
-            margin-bottom: 20px;
-            color: #1e3c72;
-        }
-        
-        .recording-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .recording-indicator.active {
-            opacity: 1;
-        }
-        
-        .pulse {
-            width: 15px;
-            height: 15px;
-            background-color: #ff4757;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(0.9);
-                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
-            }
-            
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 10px rgba(255, 71, 87, 0);
-            }
-            
-            100% {
-                transform: scale(0.9);
-                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
-            }
-        }
-        
-        .feedback {
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #555;
-            min-height: 24px;
-        }
-        
-        .progress-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f1f3f4;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        @media (max-width: 600px) {
-            .controls {
-                flex-direction: column;
-            }
-            
-            .language-selector {
-                flex-direction: column;
-            }
-            
-            .phrase {
-                font-size: 18px;
-            }
-            
-            .translation {
-                font-size: 16px;
-            }
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>English-Myanmar Speaking Practice</h1>
-            <p>Improve your language skills by practicing speaking</p>
-        </header>
-        
-        <div class="app-body">
-            <div class="language-selector">
-                <button class="language-btn active" id="english-btn">English Practice</button>
-                <button class="language-btn" id="myanmar-btn">မြန်မာစကား လေ့ကျင့်ရန်</button>
-            </div>
-            
-            <div class="phrase-container">
-                <div class="phrase" id="phrase-text">Hello, how are you today?</div>
-                <div class="translation" id="translation-text">မင်္ဂလာပါ၊ ဒီနေ့ ဘယ်လိုနေလဲ?</div>
-            </div>
-            
-            <div class="controls">
-                <button class="control-btn" id="new-phrase-btn">
-                    <span>New Phrase</span>
-                </button>
-                <button class="control-btn" id="speak-btn">
-                    <span>Speak</span>
-                </button>
-                <button class="control-btn secondary" id="record-btn">
-                    <span>Record</span>
-                </button>
-            </div>
-            
-            <div class="practice-area">
-                <h3>Practice Speaking</h3>
-                <div class="recording-indicator" id="recording-indicator"><div class="pulse"></div>
-                    <span>Recording... Speak now</span>
-                </div>
-                <div class="feedback" id="feedback">
-                    Click "Record" to practice speaking
-                </div>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress" id="progress-bar"></div>
-                </div>
-                <div>Practice Progress: <span id="progress-text">0%</span></div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Practice daily to improve your language skills | English-Myanmar Speaking App</p>
-        </footer>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const englishBtn = document.getElementById('english-btn');
-            const myanmarBtn = document.getElementById('myanmar-btn');
-            const phraseText = document.getElementById('phrase-text');
-            const translationText = document.getElementById('translation-text');
-            const newPhraseBtn = document.getElementById('new-phrase-btn');
-            const speakBtn = document.getElementById('speak-btn');
-            const recordBtn = document.getElementById('record-btn');
-            const recordingIndicator = document.getElementById('recording-indicator');
-            const feedback = document.getElementById('feedback');
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            
-            // Sample phrases for practice
-            const englishPhrases = [
-                "Hello, how are you today?",
-                "What is your name?",
-                "Where are you from?",
-                "How old are you?",
-                "What do you do for a living?",
-                "What time is it now?",
-                "Can you help me, please?",
-                "I would like to order some food.",
-                "How much does this cost?",
-                "Where is the nearest hospital?",
-                "I don't understand.",
-                "Could you speak more slowly?",
-                "Thank you very much.",
-                "You're welcome.",
-                "Have a nice day!"
-            ];
-            
-            const myanmarTranslations = [
-                "မင်္ဂလာပါ၊ ဒီနေ့ ဘယ်လိုနေလဲ?",
-                "မင်းနာမည်ဘယ်လိုခေါ်လဲ?",
-                "မင်းဘယ်ကလဲ?",
-                "မင်းအသက်ဘယ်လောက်ရှိပြီလဲ?",
-                "မင်းအလုပ်ကဘာလဲ?",
-                "အခုဘယ်နှစ်နာရီရှိပြီလဲ?",
-                "ကျေးဇူးပြုပြီး ကူညီပေးနိုင်မလား?",
-                "အစားအသောက်အချို့ မှာချင်ပါတယ်။",
-                "ဒါဘယ်လောက်ကျပါသလဲ?",
-                "အနီးဆုံးဆေးရုံဘယ်မှာလဲ?",
-                "နားမလည်ဘူး။",
-                "နည်းနည်းလေးဖြည်းဖြည်းပြောပေးနိုင်မလား?",
-                "ကျေးဇူးအများကြီးတင်ပါတယ်။",
-                "ရပါတယ်။",
-                "ပျော်ရွှင်ဖွယ်နေ့လေးဖြစ်ပါစေ။"
-            ];
-            
-            // App state
-            let currentLanguage = 'english';
-            let currentPhraseIndex = 0;
-            let progress = 0;
-            
-            // Initialize the app
-            function initApp() {
-                // Set initial phrase
-                updatePhrase();
-                
-                // Set up event listeners
-                englishBtn.addEventListener('click', function() {
-                    setLanguage('english');
-                });
-                
-                myanmarBtn.addEventListener('click', function() {
-                    setLanguage('myanmar');
-                });
-                
-                newPhraseBtn.addEventListener('click', function() {updatePhrase();
-                    feedback.textContent = "Try saying the new phrase";
-                });
-                
-                speakBtn.addEventListener('click', function() {
-                    speakPhrase();
-                });
-                
-                recordBtn.addEventListener('click', function() {
-                    toggleRecording();
-                });
-            }
-            
-            // Set the current language
-            function setLanguage(lang) {
-                currentLanguage = lang;
-                
-                if (lang === 'english') {
-                    englishBtn.classList.add('active');
-                    myanmarBtn.classList.remove('active');
-                    phraseText.textContent = englishPhrases[currentPhraseIndex];
-                    translationText.textContent = myanmarTranslations[currentPhraseIndex];
-                } else {
-                    myanmarBtn.classList.add('active');
-                    englishBtn.classList.remove('active');
-                    phraseText.textContent = myanmarTranslations[currentPhraseIndex];
-                    translationText.textContent = englishPhrases[currentPhraseIndex];
-                }
-                
-                feedback.textContent = Now practicing ${lang === 'english' ? 'English' : 'Myanmar'};
-            }
-            
-            // Update the displayed phrase
-            function updatePhrase() {
-                // Get a random phrase that's different from the current one
-                let newIndex;
-                do {
-                    newIndex = Math.floor(Math.random() * englishPhrases.length);
-                } while (newIndex === currentPhraseIndex && englishPhrases.length > 1);
-                
-                currentPhraseIndex = newIndex;
-                
-                if (currentLanguage === 'english') {
-                    phraseText.textContent = englishPhrases[currentPhraseIndex];
-                    translationText.textContent = myanmarTranslations[currentPhraseIndex];
-                } else {
-                    phraseText.textContent = myanmarTranslations[currentPhraseIndex];
-                    translationText.textContent = englishPhrases[currentPhraseIndex];
-                }
-            }
-            
-            // Speak the current phrase
-            function speakPhrase() {
-                const textToSpeak = currentLanguage === 'english' 
-                    ? englishPhrases[currentPhraseIndex] 
-                    : myanmarTranslations[currentPhraseIndex];
-                
-                // In a real app, you would use the Web Speech API here
-                // For this demo, we'll just simulate it
-                feedback.textContent = "Speaking the phrase...";
-                
-                // Simulate speech completion after a delay
-                setTimeout(() => {
-                    feedback.textContent = "Now try repeating the phrase yourself";
-                }, 2000);
-            }
-            
-            // Toggle recording
-            function toggleRecording() {
-                if (recordingIndicator.classList.contains('active')) {
-                    // Stop recording
-                    recordingIndicator.classList.remove('active');
-                    recordBtn.innerHTML = '<span>Record</span>';
-                    feedback.textContent = "Recording stopped. Good job!";
-                    
-                    // Update progress
-                    updateProgress();
-                } else {
-                    // Start recording
-                    recordingIndicator.classList.add('active');
-                    recordBtn.innerHTML = '<span>Stop</span>';
-                    feedback.textContent = "Recording... Speak the phrase now";// In a real app, you would start recording using the MediaRecorder API
-                    // For this demo, we'll just simulate recording for 5 seconds
-                    setTimeout(() => {
-                        if (recordingIndicator.classList.contains('active')) {
-                            recordingIndicator.classList.remove('active');
-                            recordBtn.innerHTML = '<span>Record</span>';
-                            feedback.textContent = "Recording time completed. Good job!";
-                            updateProgress();
-                        }
-                    }, 5000);
-                }
-            }
-            
-            // Update progress
-            function updateProgress() {
-                progress = Math.min(progress + 10, 100);
-                progressBar.style.width = ${progress}%;
-                progressText.textContent = ${progress}%;
-                
-                if (progress === 100) {
-                    feedback.textContent = "Congratulations! You've completed all practice phrases!";
-                }
-            }
-            
-            // Initialize the app
-            initApp();
-        });
-    </script>
+    <h1>🇺🇸🇲🇲 အင်္ဂလိပ်-မြန်မာ စကားပြော ၁၀၀</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="number">စဉ်</th>
+                <th>အင်္ဂလိပ် (English)</th>
+                <th>မြန်မာ (Myanmar)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td class="number">1</td><td>Hello. How are you?</td><td>မင်္ဂလာပါ။ နေကောင်းလား?</td></tr>
+            <tr><td class="number">2</td><td>I'm fine, thank you.</td><td>နေကောင်းပါတယ်။ ကျေးဇူးတင်ပါတယ်။</td></tr>
+            <tr><td class="number">3</td><td>What is your name?</td><td>ခင်ဗျား နာမည် ဘယ်လိုခေါ်ပါသလဲ?</td></tr>
+            <tr><td class="number">4</td><td>My name is [Your Name].</td><td>ကျွန်တော့်/ကျွန်မ နာမည်က [သင့်နာမည်] ပါ။</td></tr>
+            <tr><td class="number">5</td><td>Where are you from?</td><td>ဘယ်နိုင်ငံ/ဘယ်မြို့ကလဲ?</td></tr>
+            <tr><td class="number">6</td><td>I am from Myanmar.</td><td>ကျွန်တော် မြန်မာနိုင်ငံကပါ။</td></tr>
+            <tr><td class="number">7</td><td>Nice to meet you.</td><td>ခင်ဗျားနဲ့ တွေ့ရတာ ဝမ်းသာပါတယ်။</td></tr>
+            <tr><td class="number">8</td><td>Excuse me.</td><td>ခွင့်ပြုပါဦး။ / ကျေးဇူးပြု၍။</td></tr>
+            <tr><td class="number">9</td><td>Can you help me?</td><td>ကျွန်တော့်ကို ကူညီနိုင်မလား?</td></tr>
+            <tr><td class="number">10</td><td>Where is the bathroom?</td><td>အိမ်သာ ဘယ်မှာလဲ?</td></tr>
+
+            <tr><td class="number">11</td><td>How much is this?</td><td>ဒါ ဘယ်လောက်လဲ?</td></tr>
+            <tr><td class="number">12</td><td>I don't understand.</td><td>ကျွန်တော် နားမလည်ပါဘူး။</td></tr>
+            <tr><td class="number">13</td><td>Can you speak slowly?</td><td>ဖြည်းဖြည်း ပြောပေးလို့ရမလား?</td></tr>
+            <tr><td class="number">14</td><td>Yes / No.</td><td>ဟုတ်ကဲ့ / မဟုတ်ပါဘူး။</td></tr>
+            <tr><td class="number">15</td><td>Thank you.</td><td>ကျေးဇူးတင်ပါတယ်။</td></tr>
+            <tr><td class="number">16</td><td>You're welcome.</td><td>ရပါတယ်။ / ကိစ္စမရှိပါဘူး။</td></tr>
+            <tr><td class="number">17</td><td>I am hungry.</td><td>ဗိုက်ဆာတယ်။</td></tr>
+            <tr><td class="number">18</td><td>I am thirsty.</td><td>ရေဆာတယ်။</td></tr>
+            <tr><td class="number">19</td><td>I need a doctor.</td><td>ဆရာဝန် လိုအပ်ပါတယ်။</td></tr>
+            <tr><td class="number">20</td><td>What time is it?</td><td>အခု ဘယ်အချိန်ရှိပြီလဲ?</td></tr>
+
+            <tr><td class="number">21</td><td>See you later.</td><td>နောက်မှ တွေ့မယ်။</td></tr>
+            <tr><td class="number">22</td><td>Have a good day.</td><td>ပျော်ရွှင်သော နေ့လေးဖြစ်ပါစေ။</td></tr><tr><td class="number">23</td><td>Do you speak English?</td><td>အင်္ဂလိပ်လို ပြောတတ်ပါသလား?</td></tr>
+            <tr><td class="number">24</td><td>I speak a little Burmese.</td><td>ကျွန်တော် မြန်မာစကား နည်းနည်း ပြောတတ်တယ်။</td></tr>
+            <tr><td class="number">25</td><td>What is this?</td><td>ဒါက ဘာလဲ?</td></tr>
+            <tr><td class="number">26</td><td>Where is the nearest bank?</td><td>အနီးဆုံးဘဏ်က ဘယ်မှာလဲ?</td></tr>
+            <tr><td class="number">27</td><td>Please write it down.</td><td>ကျေးဇူးပြုပြီး ရေးပေးပါ။</td></tr>
+            <tr><td class="number">28</td><td>I'm sorry.</td><td>စိတ်မကောင်းပါဘူး။ / တောင်းပန်ပါတယ်။</td></tr>
+            <tr><td class="number">29</td><td>That's right.</td><td>အဲဒါ မှန်ပါတယ်။</td></tr>
+            <tr><td class="number">30</td><td>Be careful.</td><td>သတိထားပါ။</td></tr>
+
+            <tr><td class="number">31</td><td>I love you.</td><td>မင်းကို ချစ်တယ်။</td></tr>
+            <tr><td class="number">32</td><td>What do you want?</td><td>မင်း ဘာလိုချင်လဲ?</td></tr>
+            <tr><td class="number">33</td><td>How was your trip?</td><td>ခရီးစဉ် အဆင်ပြေရဲ့လား?</td></tr>
+            <tr><td class="number">34</td><td>It was great!</td><td>အရမ်းကောင်းခဲ့တယ်။</td></tr>
+            <tr><td class="number">35</td><td>I need to go now.</td><td>အခု သွားရတော့မယ်။</td></tr>
+            <tr><td class="number">36</td><td>Give me the bill, please.</td><td>ဘေလ်ရှင်းပေးပါဦး။</td></tr>
+            <tr><td class="number">37</td><td>I will take this.</td><td>ဒါကို ယူပါ့မယ်။</td></tr>
+            <tr><td class="number">38</td><td>Where can I find a taxi?</td><td>တက္ကစီ ဘယ်မှာရှာလို့ရမလဲ?</td></tr>
+            <tr><td class="number">39</td><td>Come here.</td><td>ဒီကိုလာပါ။</td></tr>
+            <tr><td class="number">40</td><td>Wait for me.</td><td>ငါ့ကို စောင့်ပါ။</td></tr>
+
+            <tr><td class="number">41</td><td>What are you doing?</td><td>ဘာလုပ်နေတာလဲ?</td></tr>
+            <tr><td class="number">42</td><td>I am learning Burmese.</td><td>ကျွန်တော် မြန်မာစာ လေ့လာနေတယ်။</td></tr>
+            <tr><td class="number">43</td><td>I'm lost.</td><td>ကျွန်တော် လမ်းပျောက်နေတယ်။</td></tr>
+            <tr><td class="number">44</td><td>Turn left / Turn right.</td><td>ဘယ်ဘက်ချိုး / ညာဘက်ချိုး။</td></tr>
+            <tr><td class="number">45</td><td>Go straight.</td><td>ဖြောင့်တန်းသွားပါ။</td></tr>
+            <tr><td class="number">46</td><td>Do you have WiFi?</td><td>ဝိုင်ဖိုင် ရနိုင်လား?</td></tr>
+            <tr><td class="number">47</td><td>The food is delicious.</td><td>အစားအစာက အရမ်း အရသာရှိတယ်။</td></tr>
+            <tr><td class="number">48</td><td>I am tired.</td><td>ပင်ပန်းနေပြီ။</td></tr>
+            <tr><td class="number">49</td><td>It is hot / cold.</td><td>ပူလိုက်တာ / အေးလိုက်တာ။</td></tr>
+            <tr><td class="number">50</td><td>I don't know.</td><td>ကျွန်တော် မသိဘူး။</td></tr>
+
+            <tr><td class="number">51</td><td>Happy Birthday!</td><td>မွေးနေ့မှစ၍ ပျော်ရွှင်ပါစေ။</td></tr>
+            <tr><td class="number">52</td><td>Good luck!</td><td>ကံကောင်းပါစေ။</td></tr>
+            <tr><td class="number">53</td><td>What is your job?</td><td>အလုပ်အကိုင်က ဘာလဲ?</td></tr>
+            <tr><td class="number">54</td><td>I am a student.</td><td>ကျွန်တော်က ကျောင်းသား/သူပါ။</td></tr>
+            <tr><td class="number">55</td><td>How old are you?</td><td>အသက် ဘယ်လောက်လဲ?</td></tr>
+            <tr><td class="number">56</td><td>I am 25 years old.</td><td>ကျွန်တော် အသက် ၂၅ နှစ်ပါ။</td></tr>
+            <tr><td class="number">57</td><td>Come in, please.</td><td>ဝင်ခဲ့ပါဦး။</td></tr>
+            <tr><td class="number">58</td><td>Sit down, please.</td><td>ထိုင်ပါဦး။</td></tr>
+            <tr><td class="number">59</td><td>How is the weather?</td><td>ရာသီဥတု ဘယ်လိုလဲ?</td></tr>
+            <tr><td class="number">60</td><td>It is raining.</td><td>မိုးရွာနေတယ်။</td></tr><tr><td class="number">61</td><td>What time does it open?</td><td>ဘယ်အချိန် ဖွင့်မလဲ?</td></tr>
+            <tr><td class="number">62</td><td>What time does it close?</td><td>ဘယ်အချိန် ပိတ်မလဲ?</td></tr>
+            <tr><td class="number">63</td><td>I need a receipt.</td><td>ဘေလ်ပြေစာ လိုချင်ပါတယ်။</td></tr>
+            <tr><td class="number">64</td><td>That's too expensive.</td><td>အရမ်းဈေးကြီးတယ်။</td></tr>
+            <tr><td class="number">65</td><td>Do you accept credit cards?</td><td>ကတ်နဲ့ ပေးချေလို့ရလား?</td></tr>
+            <tr><td class="number">66</td><td>I am very happy.</td><td>ကျွန်တော် အရမ်းပျော်တယ်။</td></tr>
+            <tr><td class="number">67</td><td>I miss you.</td><td>မင်းကို လွမ်းတယ်။</td></tr>
+            <tr><td class="number">68</td><td>Is everything okay?</td><td>အားလုံး အဆင်ပြေရဲ့လား?</td></tr>
+            <tr><td class="number">69</td><td>I am going home.</td><td>အိမ်ပြန်တော့မယ်။</td></tr>
+            <tr><td class="number">70</td><td>What happened?</td><td>ဘာဖြစ်ခဲ့တာလဲ?</td></tr>
+
+            <tr><td class="number">71</td><td>I will call you later.</td><td>နောက်မှ ဖုန်းခေါ်လိုက်မယ်။</td></tr>
+            <tr><td class="number">72</td><td>Let's go.</td><td>သွားကြမယ်။</td></tr>
+            <tr><td class="number">73</td><td>Hurry up!</td><td>မြန်မြန်လုပ်။</td></tr>
+            <tr><td class="number">74</td><td>Can I take a picture?</td><td>ဓာတ်ပုံရိုက်လို့ ရမလား?</td></tr>
+            <tr><td class="number">75</td><td>It's beautiful.</td><td>ဒါက လှတယ်။</td></tr>
+            <tr><td class="number">76</td><td>I am feeling sick.</td><td>နေမကောင်းဘူး။</td></tr>
+            <tr><td class="number">77</td><td>Please wait a moment.</td><td>ခဏလေး စောင့်ပါဦး။</td></tr>
+            <tr><td class="number">78</td><td>I need a ticket.</td><td>လက်မှတ်တစ်စောင် လိုပါတယ်။</td></tr>
+            <tr><td class="number">79</td><td>Which way?</td><td>ဘယ်လမ်းကလဲ?</td></tr>
+            <tr><td class="number">80</td><td>I agree.</td><td>ကျွန်တော် သဘောတူတယ်။</td></tr>
+
+            <tr><td class="number">81</td><td>Can I try this on?</td><td>ဒါကို စမ်းဝတ်ကြည့်လို့ရမလား?</td></tr>
+            <tr><td class="number">82</td><td>What do you recommend?</td><td>ဘာ အကြံပြုချင်လဲ?</td></tr>
+            <tr><td class="number">83</td><td>How long does it take?</td><td>ဘယ်လောက်ကြာမလဲ?</td></tr>
+            <tr><td class="number">84</td><td>It is near / far.</td><td>နီးတယ် / ဝေးတယ်။</td></tr>
+            <tr><td class="number">85</td><td>Good morning.</td><td>မင်္ဂလာပါ (မနက်ပိုင်း)။</td></tr>
+            <tr><td class="number">86</td><td>Good night.</td><td>ကောင်းသော ညပါ (အိပ်ရာဝင်ချိန်)။</td></tr>
+            <tr><td class="number">87</td><td>What is your phone number?</td><td>ဖုန်းနံပါတ် ဘယ်လောက်လဲ?</td></tr>
+            <tr><td class="number">88</td><td>I'm married / single.</td><td>အိမ်ထောင်ရှိပါတယ် / တစ်ကိုယ်တည်းပါ။</td></tr>
+            <tr><td class="number">89</td><td>Do you have children?</td><td>ကလေးတွေ ရှိပါသလား?</td></tr>
+            <tr><td class="number">90</td><td>I like it.</td><td>ကျွန်တော် ဒါကို ကြိုက်တယ်။</td></tr>
+
+            <tr><td class="number">91</td><td>I don't like it.</td><td>ကျွန်တော် ဒါကို မကြိုက်ဘူး။</td></tr>
+            <tr><td class="number">92</td><td>Take care.</td><td>ဂရုစိုက်နော်။</td></tr>
+            <tr><td class="number">93</td><td>Can I use your phone?</td><td>ခင်ဗျားဖုန်းကို သုံးလို့ရမလား?</td></tr>
+            <tr><td class="number">94</td><td>It's an emergency.</td><td>အရေးပေါ် အခြေအနေပါ။</td></tr>
+            <tr><td class="number">95</td><td>Let me see.</td><td>ကျွန်တော့်ကို ကြည့်ပါရစေ။</td></tr>
+            <tr><td class="number">96</td><td>I will pay.</td><td>ကျွန်တော် ရှင်းပါ့မယ်။</td></tr>
+            <tr><td class="number">97</td><td>Happy New Year!</td><td>နှစ်သစ်မှာ ပျော်ရွှင်ပါစေ။</td></tr><tr><td class="number">98</td><td>Congratulations!</td><td>ဂုဏ်ယူပါတယ်။</td></tr>
+            <tr><td class="number">99</td><td>Help!</td><td>ကူညီပါဦး!</td></tr>
+            <tr><td class="number">100</td><td>Welcome!</td><td>ကြိုဆိုပါတယ်။</td></tr>
+        </tbody>
+    </table>
+
 </body>
-
 </html>
