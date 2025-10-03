@@ -1,0 +1,481 @@
+.
+
+`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English-Myanmar Speaking Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .app-body {
+            padding: 30px;
+        }
+        
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+        
+        .language-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background-color: #e0e0e0;
+            color: #555;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-btn.active {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            box-shadow: 0 4px 10px rgba(30, 60, 114, 0.3);
+        }
+        
+        .phrase-container {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .phrase {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .translation {
+            font-size: 18px;
+            color: #555;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .control-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+        
+        .control-btn:active {
+            transform: translateY(0);
+        }
+        
+        .control-btn.secondary {
+            background: linear-gradient(to right, #757f9a, #d7dde8);
+        }
+        
+        .practice-area {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);}
+        
+        .practice-area h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+        
+        .recording-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .recording-indicator.active {
+            opacity: 1;
+        }
+        
+        .pulse {
+            width: 15px;
+            height: 15px;
+            background-color: #ff4757;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            }
+            
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(255, 71, 87, 0);
+            }
+            
+            100% {
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+            }
+        }
+        
+        .feedback {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #555;
+            min-height: 24px;
+        }
+        
+        .progress-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f3f4;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .language-selector {
+                flex-direction: column;
+            }
+            
+            .phrase {
+                font-size: 18px;
+            }
+            
+            .translation {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>English-Myanmar Speaking Practice</h1>
+            <p>Improve your language skills by practicing speaking</p>
+        </header>
+        
+        <div class="app-body">
+            <div class="language-selector">
+                <button class="language-btn active" id="english-btn">English Practice</button>
+                <button class="language-btn" id="myanmar-btn">မြန်မာစကား လေ့ကျင့်ရန်</button>
+            </div>
+            
+            <div class="phrase-container">
+                <div class="phrase" id="phrase-text">Hello, how are you today?</div>
+                <div class="translation" id="translation-text">မင်္ဂလာပါ၊ ဒီနေ့ ဘယ်လိုနေလဲ?</div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="new-phrase-btn">
+                    <span>New Phrase</span>
+                </button>
+                <button class="control-btn" id="speak-btn">
+                    <span>Speak</span>
+                </button>
+                <button class="control-btn secondary" id="record-btn">
+                    <span>Record</span>
+                </button>
+            </div>
+            
+            <div class="practice-area">
+                <h3>Practice Speaking</h3>
+                <div class="recording-indicator" id="recording-indicator"><div class="pulse"></div>
+                    <span>Recording... Speak now</span>
+                </div>
+                <div class="feedback" id="feedback">
+                    Click "Record" to practice speaking
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div>Practice Progress: <span id="progress-text">0%</span></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Practice daily to improve your language skills | English-Myanmar Speaking App</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const englishBtn = document.getElementById('english-btn');
+            const myanmarBtn = document.getElementById('myanmar-btn');
+            const phraseText = document.getElementById('phrase-text');
+            const translationText = document.getElementById('translation-text');
+            const newPhraseBtn = document.getElementById('new-phrase-btn');
+            const speakBtn = document.getElementById('speak-btn');
+            const recordBtn = document.getElementById('record-btn');
+            const recordingIndicator = document.getElementById('recording-indicator');
+            const feedback = document.getElementById('feedback');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            // Sample phrases for practice
+            const englishPhrases = [
+                "Hello, how are you today?",
+                "What is your name?",
+                "Where are you from?",
+                "How old are you?",
+                "What do you do for a living?",
+                "What time is it now?",
+                "Can you help me, please?",
+                "I would like to order some food.",
+                "How much does this cost?",
+                "Where is the nearest hospital?",
+                "I don't understand.",
+                "Could you speak more slowly?",
+                "Thank you very much.",
+                "You're welcome.",
+                "Have a nice day!"
+            ];
+            
+            const myanmarTranslations = [
+                "မင်္ဂလာပါ၊ ဒီနေ့ ဘယ်လိုနေလဲ?",
+                "မင်းနာမည်ဘယ်လိုခေါ်လဲ?",
+                "မင်းဘယ်ကလဲ?",
+                "မင်းအသက်ဘယ်လောက်ရှိပြီလဲ?",
+                "မင်းအလုပ်ကဘာလဲ?",
+                "အခုဘယ်နှစ်နာရီရှိပြီလဲ?",
+                "ကျေးဇူးပြုပြီး ကူညီပေးနိုင်မလား?",
+                "အစားအသောက်အချို့ မှာချင်ပါတယ်။",
+                "ဒါဘယ်လောက်ကျပါသလဲ?",
+                "အနီးဆုံးဆေးရုံဘယ်မှာလဲ?",
+                "နားမလည်ဘူး။",
+                "နည်းနည်းလေးဖြည်းဖြည်းပြောပေးနိုင်မလား?",
+                "ကျေးဇူးအများကြီးတင်ပါတယ်။",
+                "ရပါတယ်။",
+                "ပျော်ရွှင်ဖွယ်နေ့လေးဖြစ်ပါစေ။"
+            ];
+            
+            // App state
+            let currentLanguage = 'english';
+            let currentPhraseIndex = 0;
+            let progress = 0;
+            
+            // Initialize the app
+            function initApp() {
+                // Set initial phrase
+                updatePhrase();
+                
+                // Set up event listeners
+                englishBtn.addEventListener('click', function() {
+                    setLanguage('english');
+                });
+                
+                myanmarBtn.addEventListener('click', function() {
+                    setLanguage('myanmar');
+                });
+                
+                newPhraseBtn.addEventListener('click', function() {updatePhrase();
+                    feedback.textContent = "Try saying the new phrase";
+                });
+                
+                speakBtn.addEventListener('click', function() {
+                    speakPhrase();
+                });
+                
+                recordBtn.addEventListener('click', function() {
+                    toggleRecording();
+                });
+            }
+            
+            // Set the current language
+            function setLanguage(lang) {
+                currentLanguage = lang;
+                
+                if (lang === 'english') {
+                    englishBtn.classList.add('active');
+                    myanmarBtn.classList.remove('active');
+                    phraseText.textContent = englishPhrases[currentPhraseIndex];
+                    translationText.textContent = myanmarTranslations[currentPhraseIndex];
+                } else {
+                    myanmarBtn.classList.add('active');
+                    englishBtn.classList.remove('active');
+                    phraseText.textContent = myanmarTranslations[currentPhraseIndex];
+                    translationText.textContent = englishPhrases[currentPhraseIndex];
+                }
+                
+                feedback.textContent = Now practicing ${lang === 'english' ? 'English' : 'Myanmar'};
+            }
+            
+            // Update the displayed phrase
+            function updatePhrase() {
+                // Get a random phrase that's different from the current one
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * englishPhrases.length);
+                } while (newIndex === currentPhraseIndex && englishPhrases.length > 1);
+                
+                currentPhraseIndex = newIndex;
+                
+                if (currentLanguage === 'english') {
+                    phraseText.textContent = englishPhrases[currentPhraseIndex];
+                    translationText.textContent = myanmarTranslations[currentPhraseIndex];
+                } else {
+                    phraseText.textContent = myanmarTranslations[currentPhraseIndex];
+                    translationText.textContent = englishPhrases[currentPhraseIndex];
+                }
+            }
+            
+            // Speak the current phrase
+            function speakPhrase() {
+                const textToSpeak = currentLanguage === 'english' 
+                    ? englishPhrases[currentPhraseIndex] 
+                    : myanmarTranslations[currentPhraseIndex];
+                
+                // In a real app, you would use the Web Speech API here
+                // For this demo, we'll just simulate it
+                feedback.textContent = "Speaking the phrase...";
+                
+                // Simulate speech completion after a delay
+                setTimeout(() => {
+                    feedback.textContent = "Now try repeating the phrase yourself";
+                }, 2000);
+            }
+            
+            // Toggle recording
+            function toggleRecording() {
+                if (recordingIndicator.classList.contains('active')) {
+                    // Stop recording
+                    recordingIndicator.classList.remove('active');
+                    recordBtn.innerHTML = '<span>Record</span>';
+                    feedback.textContent = "Recording stopped. Good job!";
+                    
+                    // Update progress
+                    updateProgress();
+                } else {
+                    // Start recording
+                    recordingIndicator.classList.add('active');
+                    recordBtn.innerHTML = '<span>Stop</span>';
+                    feedback.textContent = "Recording... Speak the phrase now";// In a real app, you would start recording using the MediaRecorder API
+                    // For this demo, we'll just simulate recording for 5 seconds
+                    setTimeout(() => {
+                        if (recordingIndicator.classList.contains('active')) {
+                            recordingIndicator.classList.remove('active');
+                            recordBtn.innerHTML = '<span>Record</span>';
+                            feedback.textContent = "Recording time completed. Good job!";
+                            updateProgress();
+                        }
+                    }, 5000);
+                }
+            }
+            
+            // Update progress
+            function updateProgress() {
+                progress = Math.min(progress + 10, 100);
+                progressBar.style.width = ${progress}%;
+                progressText.textContent = ${progress}%;
+                
+                if (progress === 100) {
+                    feedback.textContent = "Congratulations! You've completed all practice phrases!";
+                }
+            }
+            
+            // Initialize the app
+            initApp();
+        });
+    </script>
+</body>
+</html>
